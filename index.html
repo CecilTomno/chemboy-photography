@@ -179,11 +179,16 @@
     .hero-note span { width: 1.85rem; height: 1.85rem; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--olive); font-family: var(--serif); font-size: .95rem; }
     .hero-art { position: relative; min-height: 0; isolation: isolate; margin: 1.35rem 0 1.35rem 1.2rem; }
     .hero-photo { position: absolute; inset: 0; overflow: hidden; background: #514b42; clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%); }
-    .hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 44%; animation: image-arrive 1.2s cubic-bezier(.2,.7,.2,1) both; transition: transform 1s cubic-bezier(.2,.7,.2,1), filter .6s ease; }
-    .hero-art:hover .hero-photo img { transform: scale(1.035); }
+    .hero-video { width: 100%; height: 100%; object-fit: cover; object-position: center 44%; animation: image-arrive 1.2s cubic-bezier(.2,.7,.2,1) both; transition: transform 1s cubic-bezier(.2,.7,.2,1), filter .6s ease; }
+    .hero-art:hover .hero-video { transform: scale(1.035); }
     .hero-photo::after { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,12,10,.02) 52%, rgba(10,12,10,.45) 100%); border: 1px solid rgba(255,255,255,.25); content: ""; pointer-events: none; }
     .hero-frame { position: absolute; z-index: -1; top: 4%; right: -1rem; bottom: -1rem; width: 58%; border: 1px solid color-mix(in srgb, var(--olive) 45%, transparent); }
     .hero-caption { position: absolute; right: 1.5rem; bottom: 2rem; z-index: 2; max-width: 12rem; padding: .95rem 1.15rem; color: var(--on-olive); background: var(--olive); font-family: var(--serif); font-size: 1rem; font-style: italic; line-height: 1.3; }
+    .hero-sound { position: absolute; left: 1.4rem; bottom: 1.55rem; z-index: 3; display: inline-flex; align-items: center; gap: .58rem; min-height: 2.65rem; padding: .65rem .9rem; color: #fff; background: rgba(18,20,18,.58); border: 1px solid rgba(255,255,255,.52); border-radius: 99px; backdrop-filter: blur(10px); cursor: pointer; font: 700 .58rem/1 var(--sans); letter-spacing: .11em; text-transform: uppercase; transition: background .25s ease, transform .25s ease, border-color .25s ease; }
+    .hero-sound:hover { transform: translateY(-2px); background: rgba(18,20,18,.82); border-color: #fff; }
+    .hero-sound svg { width: 1rem; height: 1rem; flex: 0 0 auto; }
+    .hero-sound .sound-waves { opacity: 0; transition: opacity .2s ease; }
+    .hero-sound[aria-pressed="true"] .sound-waves { opacity: 1; }
     .hero-index { position: absolute; top: 1.5rem; left: -.7rem; z-index: 2; writing-mode: vertical-rl; color: #fff; font-size: .58rem; font-weight: 700; letter-spacing: .19em; text-transform: uppercase; }
     .hero-side-note { position: absolute; right: .8rem; top: 8%; writing-mode: vertical-rl; color: #fff; font-size: .57rem; letter-spacing: .16em; text-transform: uppercase; }
     .hero-stamp { position: absolute; top: 7%; left: 7%; z-index: 3; width: clamp(5.5rem, 8.3vw, 7.4rem); aspect-ratio: 1; display: grid; place-items: center; color: #fff; background: rgba(20,22,19,.38); border: 1px solid rgba(255,255,255,.48); border-radius: 50%; backdrop-filter: blur(7px); }
@@ -331,7 +336,8 @@
       .hero-index { left: -.45rem; top: 1rem; }
       .hero-side-note { right: .45rem; top: 7%; }
       .hero-stamp { top: 8%; left: 9%; width: 5.2rem; }
-      .hero-caption { right: .6rem; bottom: 1rem; }
+      .hero-caption { right: .6rem; bottom: 1rem; max-width: 10rem; padding: .75rem .85rem; font-size: .9rem; }
+      .hero-sound { left: .6rem; bottom: 1rem; min-height: 2.45rem; padding: .58rem .72rem; font-size: .54rem; }
       .scroll-cue { bottom: 1.2rem; }
       .section-heading { align-items: start; flex-direction: column; gap: 1.2rem; }
       .section-heading h2 { font-size: clamp(3.2rem, 13vw, 4.7rem); }
@@ -405,7 +411,15 @@
         </div>
         <div class="hero-art" data-reveal data-delay="1">
           <span class="hero-index">01 — Real moments, kept</span>
-          <div class="hero-photo"><img fetchpriority="high" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1500&q=88" alt="Temporary wedding mood image; replace with a Chemboy Photography image"></div>
+          <div class="hero-photo">
+            <video class="hero-video" id="hero-video" playsinline loop muted preload="metadata" aria-hidden="true">
+              <source src="assets/chemboy-hero.mp4" type="video/mp4">
+            </video>
+          </div>
+          <button class="hero-sound" id="hero-sound" type="button" aria-label="Turn film sound on at low volume" aria-pressed="false">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 8v4h3l4 3V5L6 8H3Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path class="sound-waves" d="M13 7a4 4 0 0 1 0 6m2-8a7 7 0 0 1 0 10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            <span class="sound-label">Sound off</span>
+          </button>
           <div class="hero-stamp" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="stamp-circle" d="M60,60 m-43,0 a43,43 0 1,1 86,0 a43,43 0 1,1 -86,0"/></defs><text class="stamp-text"><textPath href="#stamp-circle">WEDDINGS · PORTRAITS · STUDIO · </textPath></text><text class="stamp-mark" x="48" y="67">✳</text></svg></div>
           <div class="hero-frame" aria-hidden="true"></div>
           <span class="hero-side-note">The little things are the big things</span>
@@ -520,6 +534,9 @@
     const themeButton = document.querySelector('#theme-toggle');
     const themeLabel = themeButton.querySelector('.mode-label');
     const themeMeta = document.querySelector('meta[name="theme-color"]');
+    const heroVideo = document.querySelector('#hero-video');
+    const heroSound = document.querySelector('#hero-sound');
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
     const lightbox = document.querySelector('#lightbox');
     const lightboxImage = lightbox.querySelector('img');
     const lightboxCaption = lightbox.querySelector('figcaption');
@@ -530,6 +547,27 @@
       if (savedTheme === 'light' || savedTheme === 'dark') theme = savedTheme;
     } catch (_) {}
     document.documentElement.dataset.theme = theme;
+
+    heroVideo.volume = 0.22;
+    const syncHeroSound = () => {
+      const soundOn = !heroVideo.muted;
+      heroSound.setAttribute('aria-pressed', String(soundOn));
+      heroSound.setAttribute('aria-label', soundOn ? 'Mute film sound' : 'Turn film sound on at low volume');
+      heroSound.querySelector('.sound-label').textContent = soundOn ? 'Sound on · 22%' : 'Sound off';
+    };
+    if (!motionPreference.matches) heroVideo.play().catch(() => {});
+    heroSound.addEventListener('click', async () => {
+      heroVideo.muted = !heroVideo.muted;
+      if (!heroVideo.muted) {
+        heroVideo.volume = 0.22;
+        try { await heroVideo.play(); } catch (_) { heroVideo.muted = true; }
+      }
+      syncHeroSound();
+    });
+    motionPreference.addEventListener('change', (event) => {
+      if (event.matches) heroVideo.pause();
+      else if (heroVideo.muted) heroVideo.play().catch(() => {});
+    });
 
     const syncThemeControl = () => {
       const goingLight = theme === 'dark';
